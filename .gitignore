@@ -1,0 +1,14 @@
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/pkg/
+/spec/reports/
+/tmp/
+.*~
+
+# /images.local
+# except this one
+#!/images.local/README.md
+

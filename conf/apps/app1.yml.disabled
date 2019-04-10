@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-app1
+spec:
+  template:
+    metadata:
+      labels:
+        app: app-app1
+    spec:
+      hostname: app-app1
+      containers:
+        - image: "registry.local/app1"
+          name: app-app1
+          env:
+            - name: db_adapter
+              value: "postgresql"
+            - name: db_database
+              value: "app1_db"
+            - name: db_host
+              value: "postgresql"
+            - name: db_port
+              value: "26257"
+            - name: db_username
+              value: "postgresql_user"
+            - name: db_password
+              value: ""
+            - name: mq_host
+              value: rabbitmq
+            - name: mq_username
+              value: rabbitmq_user
+            - name: mq_password
+              value: rabbitmq_password
