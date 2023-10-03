@@ -1,4 +1,4 @@
-FROM ruby:2.4.3-alpine
+FROM ruby:alpine3.17
 
 # ADD bash.d /root/bash.d
 # RUN echo "for f in ~/bash.d/*.sh; do source \$f; done" >> /root/.bashrc

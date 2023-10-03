@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sqs-sns
+spec:
+  ports:
+    - name: sqs-sns-default-port
+      port: 4100
+    - name: sqs-sns-port
+      port: 4566
+  selector:
+    app: sqs-sns
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: goaws-config
+data:
+  goaws.yaml: |
+    Local:
+      Host: sqs-sns
+      Port: 4566
+      QueueAttributeDefaults:
+        MaximumMessageSize: 256000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqs-sns
+spec:
+  selector:
+    matchLabels:
+      app: sqs-sns
+  template:
+    metadata:
+      labels:
+        app: sqs-sns
+    spec:
+      hostname: sqs-sns
+      volumes:
+         - name: config-dir
+           configMap:
+             name: goaws-config
+      containers:
+        - image: "kukushkin/goaws:latest"
+          # image: goaws
+          imagePullPolicy: Always
+          name: sqs-sns
+          ports:
+            - containerPort: 4100 # default
+            - containerPort: 4566 # new universal port
+          volumeMounts:
+            - name: config-dir
+              mountPath: /conf

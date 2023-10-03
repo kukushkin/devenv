@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: localstack
+spec:
+  ports:
+    - name: localstack-s3-port
+      port: 4572
+    - name: localstack-sns-port
+      port: 4575
+    - name: localstack-sqs-port
+      port: 4576
+  selector:
+    app: localstack
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: localstack
+spec:
+  template:
+    metadata:
+      labels:
+        app: localstack
+    spec:
+      hostname: localstack
+      containers:
+        - image: "localstack/localstack:0.10.4"
+          name: localstack
+          env:
+            - name: SERVICES
+              value: "s3,sqs,sns"
+            - name: HOSTNAME_EXTERNAL
+              value: "localstack"
+          ports:
+            - containerPort: 4572
+            - containerPort: 4575
+            - containerPort: 4576

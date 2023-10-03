@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-db-create
+spec:
+  template:
+    metadata:
+      name: postgres-db-create
+    spec:
+      containers:
+      - name: postgres-db-create
+        image: postgres-client
+        imagePullPolicy: Never
+        command:
+         - "bin/bash"
+         - "-c"
+         - "which psql"
+      restartPolicy: Never

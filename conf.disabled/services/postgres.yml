@@ -20,14 +20,11 @@ spec:
     requests:
       storage: 1G
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: postgres
 spec:
-  selector:
-    matchLabels:
-      app: postgres
   template:
     metadata:
       labels:

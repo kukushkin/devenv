@@ -6,18 +6,24 @@ A development environment, intended to be run on a local machine in a *minikube*
 
 ## Requirements
 
-* [VirtualBox](https://www.virtualbox.org/)
+* [Colima](https://github.com/abiosoft/colima)
 (any other hypervisor supported by minikube will probably work as well, but is untested)
 * [minikube](https://github.com/kubernetes/minikube)
-* Ruby (2.x)
+* Ruby (2+), installed on your host machine by default
 
 ## Installation (Mac OS X)
 
-First, set up *Virtualbox* and *minikube*. On Mac OS X the easiest way is to use `brew cask`:
+First, set up *Colima* and *minikube*. On Mac OS X the easiest way is to use `brew`:
 
 ```
-> brew cask install virtualbox
-> brew cask install minikube
+> brew install colima
+> brew install minikube
+```
+
+Then start minikube:
+```
+> colima start
+> minikube start --mount --mount-string="/Users:/Users" --driver=docker
 ```
 
 Then clone the project into a local folder:
@@ -39,9 +45,8 @@ The project contains some docker images that can be used together with *kplay* t
 
 The images can be found under `./images`, each one in a separate folder. Currently, these images are available as base images for *kplay*:
 
-* dev -- vanilla Ubuntu (16.04) environment
-* ruby-dev -- vanilla Ubuntu (16.04) environment, ruby 2.4 and some common gems
-* ruby-dev-alpine -- experimental Alpine-based image, with ruby 2.4
+* dev -- vanilla Ubuntu (22.04 LTS) environment
+* ruby-dev -- vanilla Ubuntu (22.04 LTS) environment, ruby 3.2 and some common gems
 
 These images together with other images defined in `./images` are built and made available in a VM local docker registry by running:
 ```
